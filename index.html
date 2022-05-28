@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Calumet HDC Web Map</title>
+    <style>
+      html,
+      body,
+      #viewDiv {
+        padding: 0;
+        margin: 0;
+        height: 100%;
+        width: 100%;
+      }
+
+    .slider {
+      -webkit-appearance: none;
+      width: 80%;
+      height: 15px;
+      border-radius: 5px;  
+      background: #d3d3d3;
+      outline: none;
+      opacity: 0.7;
+      -webkit-transition: .2s;
+      transition: opacity .2s;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 25px;
+      height: 25px;
+      border-radius: 50%; 
+      background: #04AA6D;
+      cursor: pointer;
+    }
+
+    .slider::-moz-range-thumb {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      background: #04AA6D;
+      cursor: pointer;
+    }
+
+    .slidecontainer {
+      position: absolute;
+      bottom: 50px;
+      left: 50px;
+      width: 70%;
+      background-color: white;
+      border: 2px solid black;
+    }
+
+    h2 {
+      display: inline-block;
+    }
+
+    
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.23/"></script>
+    <script>
+      require(["esri/Map", "esri/views/MapView", "esri/config", "esri/WebMap", "esri/layers/TileLayer"], (Map, MapView, esriConfig, WebMap, TileLayer) => {
+
+        // Set the portal URL
+        esriConfig.portalUrl = "https://portal1-geo.sabu.mtu.edu/mtuarcgis/";
+        const webmap = new WebMap({
+          portalItem: { // autocasts as new PortalItem()
+            id: "b0fdf00a68f144dca01de82b1690d34f"
+          }
+        });
+        const view = new MapView({
+          container: "viewDiv", // Reference to the view div created in step 5
+          map: webmap, // Reference to the map object created before the view
+          //zoom: 4, // Sets zoom level based on level of detail (LOD)
+          //center: [15, 65] // Sets center point of view using longitude,latitude
+        });
+
+        let fips_1888 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1888_FIPS/MapServer"
+        });
+
+         webmap.add(fips_1888);        
+
+        let fips_1900 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1900_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1900);
+
+        let fips_1908 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1908_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1908);
+
+        let fips_1917 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1917_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1917);
+
+        let fips_1928 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1942_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1928);
+
+        let fips_1949 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_19493_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1949);
+
+        var years = [1888, 1900, 1908, 1917, 1928, 1942];
+        var input = document.getElementById('slider');
+        var output = document.getElementById('output');
+        slider.oninput = function(){
+        output.innerHTML = years[this.value];
+
+        if (years[this.value] == "1888") {
+          fips_1888.visible = true;
+          fips_1900.visible = false;
+        }
+
+         if (years[this.value] == "1900") {
+          fips_1888.visible = false;
+          fips_1900.visible = true;
+        }
+
+
+         //const activeLayer = "fips_" + years[this.value];
+         /*years.forEach((layer) => {
+          
+         if (layer != years[this.value]) {
+              console.log(layer);     
+           //console.log(layerName);
+           ("fips_" + layer).visible = false; 
+         } 
+    //console.log(element);
+});*/
+        };
+        input.oninput();
+      });
+    </script>
+  </head>
+  <body>
+    <div id="viewDiv"></div>
+    <div class="slidecontainer">
+      <div id="output"></div>
+      <h2>1888</h2>
+  <input type="range" min="0" max="6" value="0" step="1"  class="slider" list="yearLabels" id="slider"><h2>1924</h2>
+</div>    
+</div>
+  </body>
+</html>
