@@ -4,24 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <title>Calumet HDC Web Map</title>
-    <style>
-      html,
-      body,
-      #viewDiv {
-        padding: 0;
-        margin: 0;
-        height: 100%;
-        width: 100%;
-      }
-
+    <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">      
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.0/viewer.css" integrity="sha512-tYobxYoCZxl0CejYCA8c4w8HRcg3wRoKaGYIQ/2ILqyB4vRqMd/Jmehxod1dQJ2uE/9rDY9pG48isM8SHEAwDQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha512-3j3VU6WC5rPQB4Ld1jnLV7Kd5xr+cq9avvhwqzbH/taCRNURoeEpoPBK9pDyeukwSxwRPJ8fDgvYXd6SkaZ2TA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/viewerjs/1.10.0/viewer.js" integrity="sha512-psAniLUS9J4A5KNQiSt9XMNeVSMx/Rz89vQJqeYlOIiTR5WK8zU/8EPwAKt+522eeV04QUzIwX5VrAW10FbdeQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>  
+    <script src="https://js.arcgis.com/4.23/"></script>
+    <style>    
+     
+    /*Map container*/
+    #viewDiv {
+      position: absolute;
+      top: 0;
+      bottom: 0;        
+      padding: 0;
+      margin-top: 56px;        
+      width: 100%;
+    }
     .slider {
       -webkit-appearance: none;
-      width: 80%;
+      width: 60%;
       height: 15px;
       border-radius: 5px;  
       background: #d3d3d3;
-      outline: none;
-      opacity: 0.7;
+      outline: none;      
       -webkit-transition: .2s;
       transition: opacity .2s;
     }
@@ -32,7 +43,7 @@
       width: 25px;
       height: 25px;
       border-radius: 50%; 
-      background: #04AA6D;
+      background: #3996b8;
       cursor: pointer;
     }
 
@@ -40,29 +51,104 @@
       width: 25px;
       height: 25px;
       border-radius: 50%;
-      background: #04AA6D;
+      background: #3996b8;
       cursor: pointer;
     }
 
     .slidecontainer {
       position: absolute;
-      bottom: 50px;
-      left: 50px;
-      width: 70%;
-      background-color: white;
+      bottom: 30px;
+      left: 10px;
+      width: 38%;
+      background-color: #f3f3f3;
       border: 2px solid black;
+      padding: 5px;
     }
 
     h2 {
       display: inline-block;
+      font-size: 18px;
+      padding: 5px;
     }
+    
+    /*Navbar height*/
+    .navbar {
+      height: 56.5px;  
+    }
+
+    /*Main Navbar Title and Logo*/
+    .navbar-brand {
+      padding: 0 10px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px; 
+      font-weight: bold;  
+      letter-spacing: 1px; 
+    }
+
+    /*Navbar links*/
+    .navbar-light .navbar-nav .nav-link {
+      color: #d9dde0;
+      font-size: 13px;
+    }
+
+    .navbar-light .navbar-nav .nav-link:visited {
+      color: #d9dde0;  
+    }
+
+    .navbar-light .navbar-nav .nav-link:hover {
+      color: white;  
+    }
+
+    /*Navbar link color*/
+    .navbar-light .navbar-brand {
+      color: white;
+    }
+
+    /*Navbar link color*/
+    .navbar-light .navbar-brand:visited {
+      color: white;
+    }
+
+    /*Navbar background color*/
+    .bg-light {
+      background: #3996b8 !important;
+      border-bottom: solid 2px black;
+    }       
+
+    .navbar-brand {
+      position: absolute;       
+      left: 0;        
+    }
+
+    .navbar-light .navbar-brand:hover {
+      color: white; 
+    }
+
+    /* Style buttons */
+.btn {
+  background-color: DodgerBlue; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  padding: 12px 16px; /* Some padding */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+/* Darker background on mouse-over */
+.btn:hover {
+  background-color: RoyalBlue;
+}
 
     
     </style>
-    <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/light/main.css" />
-    <script src="https://js.arcgis.com/4.23/"></script>
+    
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/config", "esri/WebMap", "esri/layers/TileLayer"], (Map, MapView, esriConfig, WebMap, TileLayer) => {
+      require(["esri/Map", "esri/views/MapView", "esri/config", "esri/WebMap", "esri/layers/TileLayer", "esri/widgets/LayerList", "esri/widgets/Expand"], (Map, MapView, esriConfig, WebMap, TileLayer, LayerList, Expand) => {
 
         // Set the portal URL
         esriConfig.portalUrl = "https://portal1-geo.sabu.mtu.edu/mtuarcgis/";
@@ -77,6 +163,21 @@
           //zoom: 4, // Sets zoom level based on level of detail (LOD)
           //center: [15, 65] // Sets center point of view using longitude,latitude
         });
+
+        // LayerList
+        layerList = new LayerList({
+          container: document.createElement("div"),
+          view: view
+        });
+
+        layerListExpand = new Expand({
+          expandIconClass: "esri-icon-layer-list",  // see https://developers.arcgis.com/javascript/latest/guide/esri-icon-font/
+          expandTooltip: "Expand LayerList", // optional, defaults to "Expand" for English locale
+          view: view,
+          content: layerList
+        });
+
+        view.ui.add(layerListExpand, "top-left");
 
         let fips_1888 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1888_FIPS/MapServer"
@@ -103,33 +204,98 @@
         webmap.add(fips_1917);
 
         let fips_1928 = new TileLayer({
-          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1942_FIPS/MapServer"
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1928_FIPS/MapServer"
         });
 
         webmap.add(fips_1928);
+
+        let fips_1942 = new TileLayer({
+          url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1942_FIPS/MapServer"
+        });
+
+        webmap.add(fips_1942);
 
         let fips_1949 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_19493_FIPS/MapServer"
         });
 
         webmap.add(fips_1949);
-
-        var years = [1888, 1900, 1908, 1917, 1928, 1942];
+        // Create an array of years
+        var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949];
         var input = document.getElementById('slider');
         var output = document.getElementById('output');
         slider.oninput = function(){
-        output.innerHTML = years[this.value];
-
+        output.innerHTML = "Sanborn Year: " + years[this.value];
+        // Set the visibility of the sanborns based on the slider year value
         if (years[this.value] == "1888") {
           fips_1888.visible = true;
           fips_1900.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = false;
+          fips_1928.visible = false;
+          fips_1942.visible = false;
+          fips_1949.visible = false;
         }
 
          if (years[this.value] == "1900") {
-          fips_1888.visible = false;
           fips_1900.visible = true;
+          fips_1888.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = false;
+          fips_1928.visible = false;
+          fips_1942.visible = false;
+          fips_1949.visible = false;         
         }
 
+        if (years[this.value] == "1908") {
+          fips_1900.visible = false;
+          fips_1888.visible = false;
+          fips_1908.visible = true;
+          fips_1917.visible = false;
+          fips_1928.visible = false;
+          fips_1942.visible = false; 
+          fips_1949.visible = false;        
+        }
+
+        if (years[this.value] == "1917") {
+          fips_1900.visible = false;
+          fips_1888.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = true;
+          fips_1928.visible = false;
+          fips_1942.visible = false;   
+          fips_1949.visible = false;      
+        }
+
+        if (years[this.value] == "1928") {
+          fips_1900.visible = false;
+          fips_1888.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = false;
+          fips_1928.visible = true;
+          fips_1942.visible = false;  
+          fips_1949.visible = false;       
+        }
+
+        if (years[this.value] == "1942") {
+          fips_1900.visible = false;
+          fips_1888.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = false;
+          fips_1928.visible = false;
+          fips_1942.visible = true;  
+          fips_1949.visible = false;       
+        }
+
+        if (years[this.value] == "1949") {
+          fips_1900.visible = false;
+          fips_1888.visible = false;
+          fips_1908.visible = false;
+          fips_1917.visible = false;
+          fips_1928.visible = false;
+          fips_1942.visible = false;  
+          fips_1949.visible = true;       
+        }
 
          //const activeLayer = "fips_" + years[this.value];
          /*years.forEach((layer) => {
@@ -147,11 +313,31 @@
     </script>
   </head>
   <body>
+     <!-- Main navbar -->
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <a class="navbar-brand" href="https://mapgeoasu.github.io/3dexplorer/" target="_blank" rel="noopener">
+    <img src="hdclogo.jpg" width="50" height="50" class="d-inline-block align-top" alt="">
+      &nbsp;Calumet HDC Web Map
+  </a>
+  <div class="collapse navbar-collapse" id="navbarNav" style="">
+        <ul class="navbar-nav mr-auto">           
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.nmu.edu/archives/home-page" target="_blank" rel="noopener">NMU Archives</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="https://www.nmu.edu/archives/uplink" target="_blank" rel="noopener">UPLINK</a>
+            </li>            
+        </ul>
+    </div>
+</nav> 
     <div id="viewDiv"></div>
     <div class="slidecontainer">
       <div id="output"></div>
       <h2>1888</h2>
-  <input type="range" min="0" max="6" value="0" step="1"  class="slider" list="yearLabels" id="slider"><h2>1924</h2>
+  <input type="range" min="0" max="6" value="0" step="1"  class="slider" list="yearLabels" id="slider"><h2>1949</h2><button class="btn"><i class="fa fa-chevron-left"></i></button>
+<button class="btn"><i class="fa fa-chevron-right"></i></button>
 </div>    
 </div>
   </body>
