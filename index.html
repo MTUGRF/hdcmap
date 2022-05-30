@@ -148,7 +148,7 @@
     </style>
     
     <script>
-      require(["esri/Map", "esri/views/MapView", "esri/config", "esri/WebMap", "esri/layers/TileLayer", "esri/widgets/LayerList", "esri/widgets/Expand"], (Map, MapView, esriConfig, WebMap, TileLayer, LayerList, Expand) => {
+      require(["esri/Map", "esri/views/MapView", "esri/config", "esri/WebMap", "esri/layers/TileLayer", "esri/widgets/LayerList", "esri/widgets/Expand", "esri/widgets/Swipe"], (Map, MapView, esriConfig, WebMap, TileLayer, LayerList, Expand, Swipe) => {
 
         // Set the portal URL
         esriConfig.portalUrl = "https://portal1-geo.sabu.mtu.edu/mtuarcgis/";
@@ -179,47 +179,90 @@
 
         view.ui.add(layerListExpand, "top-left");
 
+        // setup a new swipe widget
+        var swipe;     
+        var swipeBtn = document.createElement('div');
+        swipeBtn.className = "esri-icon-dock-left esri-widget--button esri-widget esri-interactive";
+        swipeBtn.title = "Compare maps";
+        swipeBtn.addEventListener('click', function(event){
+          // create a new Swipe widget
+            swipe = new Swipe({
+              leadingLayers: [boundary, fips_1888],
+              type: "scope",
+              //trailingLayers: [nearInfrared],
+              position: 35, // set position of widget to 35%
+              view: view
+            });
+          view.ui.add(swipe);
+          $(".esri-icon-close").show(); 
+          $(".esri-icon-dock-left").hide();
+        });
+       
+        // Add the button to the UI
+        view.ui.add(swipeBtn, "top-left");  
+
+        var closeBtn = document.createElement('div');
+        closeBtn.className = "esri-icon-close esri-widget--button esri-widget esri-interactive";
+        closeBtn.title = "Exit swipe";
+        closeBtn.addEventListener('click', function(event){
+          swipe.destroy();
+          $(".esri-icon-close").hide(); 
+          $(".esri-icon-dock-left").show();
+        });
+
+        // Add the button to the UI
+        view.ui.add(closeBtn, "top-left");  
+
+        $(".esri-icon-close").hide();  
+
         let fips_1888 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1888_FIPS/MapServer"
         });
-
+         fips_1888.listMode = "hide";
          webmap.add(fips_1888);        
 
         let fips_1900 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1900_FIPS/MapServer"
         });
-
+        fips_1900.listMode = "hide";
         webmap.add(fips_1900);
 
         let fips_1908 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1908_FIPS/MapServer"
         });
-
+        fips_1908.listMode = "hide";
         webmap.add(fips_1908);
 
         let fips_1917 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1917_FIPS/MapServer"
         });
-
+        fips_1917.listMode = "hide";
         webmap.add(fips_1917);
 
         let fips_1928 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1928_FIPS/MapServer"
         });
-
+        fips_1928.listMode = "hide";
         webmap.add(fips_1928);
 
         let fips_1942 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_1942_FIPS/MapServer"
         });
-
+        fips_1942.listMode = "hide";
         webmap.add(fips_1942);
 
         let fips_1949 = new TileLayer({
           url: "https://portal1-geo.sabu.mtu.edu:6443/arcgis/rest/services/KeweenawHSDI/KeTT_19493_FIPS/MapServer"
         });
-
+        fips_1949.listMode = "hide";
         webmap.add(fips_1949);
+
+        let boundary = webmap.allLayers.find(function(layer) {
+          
+          return layer.title === "CCHD Buildings";
+        });
+
+        console.log(boundary);
         // Create an array of years
         var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949];
         var input = document.getElementById('slider');
@@ -317,17 +360,17 @@
     <nav class="navbar navbar-expand-md navbar-light bg-light">
   <a class="navbar-brand" href="https://mapgeoasu.github.io/3dexplorer/" target="_blank" rel="noopener">
     <img src="hdclogo.jpg" width="50" height="50" class="d-inline-block align-top" alt="">
-      &nbsp;Calumet HDC Web Map
+      &nbsp;Calumet HDC WebMap
   </a>
   <div class="collapse navbar-collapse" id="navbarNav" style="">
         <ul class="navbar-nav mr-auto">           
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="https://www.nmu.edu/archives/home-page" target="_blank" rel="noopener">NMU Archives</a>
+                <a class="nav-link" href="http://www.villageofcalumet.com/historic-district-commission.html" target="_blank" rel="noopener">Calumet HDC</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="https://www.nmu.edu/archives/uplink" target="_blank" rel="noopener">UPLINK</a>
+                <a class="nav-link" href="https://www.mtu.edu/greatlakes/shared-facilities/geospatial/" target="_blank" rel="noopener">MTU GRF</a>
             </li>            
         </ul>
     </div>
