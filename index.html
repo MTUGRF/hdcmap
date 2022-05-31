@@ -128,31 +128,42 @@
       color: white; 
     }
 
-     /* Style buttons */
-    .btn {
-      background-color: #f3f3f3; /* Blue background */
-      border: 2px solid #3996b8; /* Remove borders */
-      color: #3996b8; /* White text */
-      padding: 12px 16px; /* Some padding */
-      font-size: 16px; /* Set a font size */
-      cursor: pointer; /* Mouse pointer on hover */
-      margin-bottom: 10px;
-      margin-left: 10px;
-    }
+   /* Style buttons */
+  .btn {
+    background-color: #f3f3f3; /* Blue background */
+    border: 2px solid #3996b8; /* Remove borders */
+    color: #3996b8; /* White text */
+    padding: 12px 16px; /* Some padding */
+    font-size: 16px; /* Set a font size */
+    cursor: pointer; /* Mouse pointer on hover */
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
 
-    /* Darker background on mouse-over */
-    .btn:hover {
-      background-color: #3996b8;
-      color: #f3f3f3;
-    }
+  /* Darker background on mouse-over */
+  .btn:hover {
+    background-color: #3996b8;
+    color: #f3f3f3;
+  }
 
-    #output {
-      color:  orange;
-      font-size:  18px;
-      font-weight:  bolder;
-      text-align:  center;
-    }
-    
+  #output {
+    color:  orange;
+    font-size:  18px;
+    font-weight:  bolder;
+    padding: 5px;
+  }
+
+  @media only screen and (max-width: 600px) {  
+    .slidecontainer {
+      width:  95%; 
+    }  
+  }
+
+   @media only screen and (max-width: 768px) {  
+    .slidecontainer {
+      width:  80%; 
+    }  
+  }        
     </style>
     
     <script>
@@ -317,7 +328,7 @@
           var input = document.getElementById('slider');
           var output = document.getElementById('output');
           slider.oninput = function(){
-            output.innerHTML = "Sanborn Year: " + years[this.value];
+            output.innerHTML = "Current Sanborn Year: " + years[this.value];
             // Set the visibility of the sanborns based on the slider year value
             if (years[this.value] == "1888") {
               fips_1888.visible = true;
@@ -420,7 +431,7 @@
       };
 
       $("#slider").on('input change', function(event) {
-        $('#output').text("Sanborn Year: " + years[$(event.currentTarget).val()]);
+        $('#output').text("Current Sanborn Year: " + years[$(event.currentTarget).val()]);
         if (years[this.value] == "1888") {
             fips_1888.visible = true;
             fips_1900.visible = false;
