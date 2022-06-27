@@ -161,8 +161,11 @@
 
    @media only screen and (max-width: 768px) {  
     .slidecontainer {
-      width:  80%; 
+      width:  80%;      
     }  
+    .esri-popup__main-container esri-widget esri-popup--shadow {
+      z-index:  99999999999999999999999999 !important;
+    }
   }        
     </style>
     
@@ -178,7 +181,16 @@
         });
         const view = new MapView({
           container: "viewDiv", // Reference to the view div created in step 5
-          map: webmap // Reference to the map object created before the view          
+          map: webmap, // Reference to the map object created before the view          
+          popup:{
+            highlightEnabled: true,
+            dockEnabled: false,
+            dockOptions: {
+                buttonEnabled: false,
+                breakpoint: false,
+                position:"top-center"
+            }
+          }
         });
 
         view.when(function() {        
@@ -220,25 +232,25 @@
           webmap.add(fips_1942);
 
           let fips_1949 = new TileLayer({
-            url: "https://portal1-geo.sabu.mtu.edu/server/rest/services/KeweenawHSDI/KeTT_19493_FIPS/MapServer"
+            url: "https://portal1-geo.sabu.mtu.edu/server/rest/services/KeweenawHSDI/Kett_19496_FIPS/MapServer?f=jsapi"
           });
           fips_1949.listMode = "hide";
           webmap.add(fips_1949);
 
           let boundary = webmap.allLayers.find(function(layer) {          
-            return layer.title === "CCHD Boundary";
+            return layer.title === "Calumet HDC Boundary";
           });
 
           let streets = webmap.allLayers.find(function(layer) {          
-            return layer.title === "Calumet Streets";
+            return layer.title === "Calumet HDC Streets";
           });
 
           let cchd_buildings = webmap.allLayers.find(function(layer) {          
-            return layer.title === "CCHD Buildings";
+            return layer.title === "Calumet HDC Buildings";
           });
 
           let grace_buildings = webmap.allLayers.find(function(layer) {          
-            return layer.title === "Buildings (GRACE 2018)";
+            return layer.title === "Calumet & Laurium Buildings (GRACE 2018)";
           });
 
           let dda = webmap.allLayers.find(function(layer) {          
@@ -250,7 +262,7 @@
           });
 
           let lots = webmap.allLayers.find(function(layer) {          
-            return layer.title === "Lots";
+            return layer.title === "Calumet HDC Lots";
           });
 
           let parcels = webmap.allLayers.find(function(layer) {          
@@ -277,7 +289,7 @@
           // LayerList
           layerList = new LayerList({
             container: document.createElement("div"),
-            view: view
+            view: view,
           });
 
           layerListExpand = new Expand({
