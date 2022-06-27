@@ -336,11 +336,15 @@
           $(".esri-icon-close").hide(); 
          
           // Create an array of years
-          var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949];
+          var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949, 1000];
           var input = document.getElementById('slider');
           var output = document.getElementById('output');
           slider.oninput = function(){
-            output.innerHTML = "Current Sanborn Year: " + years[this.value];
+            if (years[this.value] == 1000) {
+              output.innerHTML = "Current Sanborn Year: None"
+            } else {
+              output.innerHTML = "Current Sanborn Year: " + years[this.value];
+            }            
             // Set the visibility of the sanborns based on the slider year value
             if (years[this.value] == "1888") {
               fips_1888.visible = true;
@@ -412,6 +416,16 @@
               fips_1949.visible = true;       
             }
 
+            if (years[this.value] == "1000") {
+              fips_1900.visible = false;
+              fips_1888.visible = false;
+              fips_1908.visible = false;
+              fips_1917.visible = false;
+              fips_1928.visible = false;
+              fips_1942.visible = false;  
+              fips_1949.visible = false;       
+            }
+
            //const activeLayer = "fips_" + years[this.value];
            /*years.forEach((layer) => {
             
@@ -426,11 +440,11 @@
         input.oninput();
 
       function zoom(direction) {
-        var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949];      
+        var years = [1888, 1900, 1908, 1917, 1928, 1942, 1949, 1000];      
         var output = document.getElementById('output');
         var slider = $("#slider");
-        var step = parseInt(slider.attr('step'), 7);
-        var currentSliderValue = parseInt(slider.val(), 7);
+        var step = parseInt(slider.attr('step'), 8);
+        var currentSliderValue = parseInt(slider.val(), 8);
         var newStepValue = currentSliderValue + step;
 
         if (direction === "out") {
@@ -443,7 +457,11 @@
       };
 
       $("#slider").on('input change', function(event) {
-        $('#output').text("Current Sanborn Year: " + years[$(event.currentTarget).val()]);
+        if (years[this.value] == 1000) {
+              output.innerHTML = "Current Sanborn Year: None"
+        } else {
+            $('#output').text("Current Sanborn Year: " + years[$(event.currentTarget).val()]);
+        }      
         if (years[this.value] == "1888") {
             fips_1888.visible = true;
             fips_1900.visible = false;
@@ -513,6 +531,16 @@
             fips_1942.visible = false;  
             fips_1949.visible = true;       
           }
+          // if the slider value is 1000 display no sanborn map
+          if (years[this.value] == "1000") {
+            fips_1900.visible = false;
+            fips_1888.visible = false;
+            fips_1908.visible = false;
+            fips_1917.visible = false;
+            fips_1928.visible = false;
+            fips_1942.visible = false;  
+            fips_1949.visible = false;       
+          }
      });
 
       $( "#forwardBtn" ).click(function() {
@@ -550,7 +578,7 @@
     <div class="slidecontainer">
       <div id="output"></div>
       <h2>1888</h2>
-  <input type="range" min="0" max="6" value="0" step="1"  class="slider" list="yearLabels" id="slider"><h2>1949</h2><button class="btn" id="backBtn"><i class="fa fa-chevron-left"></i></button>
+  <input type="range" min="0" max="7" value="0" step="1"  class="slider" list="yearLabels" id="slider"><h2>Present</h2><button class="btn" id="backBtn"><i class="fa fa-chevron-left"></i></button>
 <button class="btn" id="forwardBtn"><i class="fa fa-chevron-right"></i></button>
 </div>    
 </div>
